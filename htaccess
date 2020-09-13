@@ -1,0 +1,2 @@
+<IfModule mod_rewrite.c>
+    RewriteCond %{SERVER_PORT} ^443$    RewriteRule (.*) http://www.ihfc-iugg.org/viewer/$1 </IfModule>
