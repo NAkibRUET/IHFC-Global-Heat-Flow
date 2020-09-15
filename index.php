@@ -11,24 +11,24 @@ include('hindex.php');
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-		<link rel="stylesheet" type="text/css" href="<?=base_url?>css/bootstrap.min.css">
-		<link rel="stylesheet" type="text/css" href="<?=base_url?>css/all.min.css">
-		<link rel="stylesheet" type="text/css" href="<?=base_url?>css/chosen.min.css" />
-		<link rel="stylesheet" type="text/css" href="<?=base_url?>css/leaflet.css" />
-		<link rel="stylesheet" type="text/css" href="<?=base_url?>css/MarkerCluster.css" />
-		<link rel="stylesheet" type="text/css" href="<?=base_url?>css/MarkerCluster.Default.css" />
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" integrity="sha512-L7MWcK7FNPcwNqnLdZq86lTHYLdQqZaz5YcAgE+5cnGmlw8JT03QB2+oxL100UeB6RlzZLUxCGSS4/++mNZdxw==" crossorigin="anonymous" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css" integrity="sha512-yVvxUQV0QESBt1SyZbNJMAwyKvFTLMyXSyBHDO4BG5t7k/Lw34tyqlSDlKIrIENIzCl+RVUNjmCPG+V/GMesRw==" crossorigin="anonymous" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.min.css" integrity="sha512-1xoFisiGdy9nvho8EgXuXvnpR5GAMSjFwp40gSRE3NwdUdIMIKuPa7bqoUhLD0O/5tPNhteAsE5XyyMi5reQVA==" crossorigin="anonymous" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.Default.css" integrity="sha512-BBToHPBStgMiw0lD4AtkRIZmdndhB6aQbXpX7omcrXeG2PauGBl2lzq2xUZTxaLxYz5IDHlmneCZ1IJ+P3kYtQ==" crossorigin="anonymous" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.css" integrity="sha512-RLEjtaFGdC4iQMJDbMzim/dOvAu+8Qp9sw7QE4wIMYcg2goVoivzwgSZq9CsIxp4xKAZPKh5J2f2lOko2Ze6FQ==" crossorigin="anonymous" />
 		<link rel="stylesheet" type="text/css" href="<?=base_url?>css/betterScale.css" />
 		<link rel="stylesheet" type="text/css" href="<?=base_url?>css/leaflet.contextmenu.min.css" />
 		<link rel="stylesheet" type="text/css" href="<?=base_url?>css/L.Control.Zoomslider.css" />
 		<link rel="stylesheet" type="text/css" href="<?=base_url?>css/Control.FullScreen.css" />
-		<link rel="stylesheet" type="text/css" href="<?=base_url?>css/leaflet.contextmenu.min.css" />
 		<link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
 		<link rel="stylesheet" href="<?=base_url?>css/style.css">
 
 		<style>
 
 			html,body{
-					height: 100vh !important;
+					/*height: 100vh !important;
+					overflow:hidden;*/
 			}
 
 
@@ -39,7 +39,9 @@ include('hindex.php');
 			input[type=checkbox], input[type=radio]{
 					top:1px;
 			}
-
+			label{
+				margin-bottom: 0.2rem !important;
+			}
 			.chosen-container-single, .chosen-container-multi{
 				width:100% !important;
 			}
@@ -72,7 +74,10 @@ include('hindex.php');
 				}
 			}
 
-			#map { position: absolute; top:0; bottom:0; right:0; left:0; }
+			#map { 
+				height: calc(100vh - 80px);
+				width: 100%;
+			}
 			#basemaps-wrapper {
 				position: absolute;
 				top: 10px;
@@ -94,6 +99,11 @@ include('hindex.php');
 			}
 			#grid {
 				margin-bottom: 5px;
+			}
+			.sideNav{
+				max-height: calc(100vh - 80px);
+				overflow-Y: scroll;
+				overflow-X: hidden;
 			}
 		</style>
 
@@ -117,7 +127,7 @@ include('hindex.php');
 							<button class="btn btn-primary">Filter Map</button>
 						</div>
 					</div>
-					<div class="col-lg-2 col-md-3 col-sm-12">
+					<div class="col-lg-2 col-md-3 col-sm-12 sideNav">
 						<div class="search__areaa srclicolst mobile_block">
 							<div class="select-table">
 							<div class="form-group mb-3">
@@ -242,18 +252,18 @@ include('hindex.php');
 									</select>
 								</div>
 
-								<div class="form-group mb-3">
+								<div class="form-group">
 									<!-- <label for="conti">Domains</label> -->
 										<div class="all-ctg">
-											<div class="form-group form-check">
+											<div class="form-check">
 												<label><input checked class="form-check-input" type="radio" id="domain" name="domain" value="" <?php if(isset($_POST['domain']) && $_POST['domain'] == ''){ echo 'checked'; }?>>All</label>
 											</div>
 
-											<div class="form-group form-check">
+											<div class="form-check">
 											<label><input class="form-check-input" type="radio" id="domain" name="domain" value="marine" <?php if(isset($_POST['domain']) && $_POST['domain'] == 'marine'){ echo 'checked'; }?>>Marine</label>
 											</div>
 
-											<div class="form-group form-check">
+											<div class="form-check">
 											<label><input class="form-check-input" type="radio" id="domain" name="domain" value="continental" <?php if(isset($_POST['domain']) && $_POST['domain'] == 'continental'){ echo 'checked'; }?>>Continental</label>
 											</div>
 									</div>
@@ -289,12 +299,12 @@ include('hindex.php');
 								<div class="row pt-3">
 									<div class="col-sm-6">
 										<div class="clear-filterr text-center">
-											<button type="submit" name="search" value="search_value" class="btn btn-primary btn-filter btn-apply"> Apply Filter</button>
+											<button type="submit" name="search" value="search_value" class="btn btn-primary btn-filter btn-apply"> Apply </button>
 										</div>
 									</div>
 									<div class="col-sm-6">
 										<div class="clear-filterr text-center">
-											<a href="" class="btn btn-danger btn-filter btn-clear" > Clear Filter</a>
+											<a href="" class="btn btn-danger btn-filter btn-clear" > Clear </a>
 										</div>
 									</div>
 								</div>
@@ -328,8 +338,8 @@ include('hindex.php');
 						</div>
 					</div>
 
-					<div class="col-lg-10 col-md-9 col-sm-12 mb-2">
-						<div id="map" class="mapp"></div>
+					<div class="col-lg-10 col-md-9 col-sm-12">
+						<div id="map"></div>
 						<div id="basemaps-wrapper" class="leaflet-bar">
 						<select id="basemaps">
 							<option value="Topographic">Topographic</option>
@@ -378,7 +388,7 @@ include('hindex.php');
 		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 		
-		<script src="<?=base_url?>js/chosen.jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js" integrity="sha512-rMGGF4wg1R73ehtnxXBt5mbUfN9JUJwbk21KMlnLZDJh7BkPmeovBuddZCENJddHYYMkCh9hPFnPmS9sspki8g==" crossorigin="anonymous"></script>
 		<script src="<?=base_url?>js/custom.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin="anonymous"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/leaflet.markercluster.js" integrity="sha512-MQlyPV+ol2lp4KodaU/Xmrn+txc1TP15pOBF/2Sfre7MRsA/pB4Vy58bEqe9u7a7DczMLtU5wT8n7OblJepKbg==" crossorigin="anonymous"></script>
@@ -393,6 +403,7 @@ include('hindex.php');
 		
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/OverlappingMarkerSpiderfier-Leaflet/0.2.6/oms.min.js"></script>
 		<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+		<script src="https://leaflet.github.io/Leaflet.Graticule/Leaflet.Graticule.js"></script>
 
 		<!-- JavaScript Includes End-->
 
@@ -589,35 +600,35 @@ include('hindex.php');
 							hideControlContainer: true
 						}).addTo(map);
 
-			<?php if(isset($_POST['grid']) && $_POST['grid'] == 'yes'){ ?>
-			// Add a basic graticule with divisions every 20 degrees
-			// as a layer on a map
-			L.graticule().addTo(map);
+		// 	<?php //if(isset($_POST['grid']) && $_POST['grid'] == 'yes'){ ?>
+		// 	// Add a basic graticule with divisions every 20 degrees
+		// 	// as a layer on a map
+		// 	L.graticule().addTo(map);
 
-			// Specify divisions every 10 degrees
-			L.graticule({ interval: 20 }).addTo(map);
+		// 	// Specify divisions every 10 degrees
+		// 	L.graticule({ interval: 20 }).addTo(map);
 
-			// Specify bold red lines instead of thin grey lines
-			L.graticule({
-					sphere: true,
-					style: {
-						color: '#777',
-						opacity: 0.1,
-						// fillColor: '#ccf',
+		// 	// Specify bold red lines instead of thin grey lines
+		// 	L.graticule({
+		// 			sphere: true,
+		// 			style: {
+		// 				color: '#777',
+		// 				opacity: 0.1,
+		// 				// fillColor: '#ccf',
 
-						weight: 0.3
-					}
-				}).addTo(map);
+		// 				weight: 0.3
+		// 			}
+		// 		}).addTo(map);
 
-				L.graticule({
-					style: {
-						color: '#777',
-						weight: 0.3,
-						opacity: 0.1
-					}
-				}).addTo(map);
+		// 		L.graticule({
+		// 			style: {
+		// 				color: '#777',
+		// 				weight: 0.3,
+		// 				opacity: 0.1
+		// 			}
+		// 		}).addTo(map);
 
-		<?php } ?>
+		// <?php // } ?>
 
 
 		// oms starts
@@ -662,11 +673,40 @@ include('hindex.php');
 			map.zoomOut();
 		}
 
-
+		var grat = L.latlngGraticule({
+				showLabel: true,
+				color: '#000',
+				weight:'0.5',
+				zoomInterval: [
+					{start: 2, end: 3, interval: 30},
+					{start: 4, end: 4, interval: 10},
+					{start: 5, end: 7, interval: 5},
+					{start: 8, end: 10, interval: 1}
+				]
+			});
+			
 		
 		$('#grid').on('change', function() {
-		//alert( this.value );
-			$( "#search_frm" ).submit();
+			//alert( this.value );
+			// var grat = L.graticule({
+			// 		sphere: true,
+			// 		style: {
+			// 			color: '#777',
+			// 			opacity: 0.1,
+			// 			weight: 0.3
+			// 		}
+			// 	});
+			// var grat2 = L.graticule({ interval: 20 }).addTo(map);
+			
+			if(this.value == "yes"){
+				grat.addTo(map);
+			}
+			else if(this.value == "no"){
+				//location.reload();
+				grat.remove();
+			}
+
+
 		});
 		
 		$('#basemaps').on('change', function() {
