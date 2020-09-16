@@ -24,89 +24,6 @@ include('hindex.php');
 		<link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
 		<link rel="stylesheet" href="<?=base_url?>css/style.css">
 
-		<style>
-
-			html,body{
-					/*height: 100vh !important;
-					overflow:hidden;*/
-			}
-
-
-			.mt-4{
-				margin-top: 0 !important;
-			}
-
-			input[type=checkbox], input[type=radio]{
-					top:1px;
-			}
-			label{
-				margin-bottom: 0.2rem !important;
-			}
-			.chosen-container-single, .chosen-container-multi{
-				width:100% !important;
-			}
-
-
-			.btn-clear{
-				color: #E31E24;
-				background: transparent;
-				transition: all 0.3s;
-			}
-
-			.btn-clear:hover{
-				color:#fff;
-				background: #E31E24;
-			}
-
-			.btn-filter{
-				width: 100%;
-			}
-
-			.leaflet-control-attribution a:hover{
-				font-size: inherit;
-
-			}
-
-
-			@media only screen and (max-width: 640px) {
-				.clear-filterr, .desktop_none{
-					margin-top: 20px;
-				}
-			}
-
-			#map { 
-				height: calc(100vh - 80px);
-				width: 100%;
-			}
-			#basemaps-wrapper {
-				position: absolute;
-				top: 10px;
-				right: 10px;
-				z-index: 400;
-				background: white;
-				padding: 10px;
-			}
-			#basemaps {
-				margin-bottom: 5px;
-			}
-			#grid-wrapper {
-				position: absolute;
-				top: 80px;
-				right: 10px;
-				z-index: 400;
-				background: white;
-				padding: 10px;
-			}
-			#grid {
-				margin-bottom: 5px;
-			}
-			.sideNav{
-				max-height: calc(100vh - 80px);
-				overflow-Y: scroll;
-				overflow-X: hidden;
-			}
-		</style>
-
 	</head>
 	<body class="viewer">
 		<div class="navbar_area">
@@ -119,16 +36,16 @@ include('hindex.php');
 				<h1 class="page-header"><?=SITENAME?></h1>
 			</nav>
 		</div>
-		<div class="container-fluid">
+		<div class="containerFluid">
 			<form action="" method="post" id="search_frm">
 				<div class="row no-gutters">
 					<div class="col-sm-12 ">
 						<div class=" desktop_none">
-							<button class="btn btn-primary">Filter Map</button>
+							<button type="button" class="btn btn-primary">Filter Map</button>
 						</div>
 					</div>
-					<div class="col-lg-2 col-md-3 col-sm-12 sideNav">
-						<div class="search__areaa srclicolst mobile_block">
+					<div class="col-lg-2 col-md-3 col-sm-12 ">
+						<div class="sideNav srclicolst mobile_block" style="">
 							<div class="select-table">
 							<div class="form-group mb-3">
 								<select class="form-control chosen-select" name="select_year" id="select_year" data-placeholder="Select Year">
@@ -318,7 +235,7 @@ include('hindex.php');
 							<label for="legend">Heat-flow [mW/m<sup>2</sup>]</label>
 							<br/>
 							<div>
-									<span><img src="http://www.ihfc-iugg.org/viewer/map_icon/map1.png" alt="" border="0" width="25px" height=""></span><span style="width:50px;text-align:right;">&le; 0 |</span>
+									<span><img src="https://www.ihfc-iugg.org/viewer/map_icon/map1.png" alt="" border="0" width="25px" height=""></span><span style="width:50px;text-align:right;">&le; 0 |</span>
 									<span style="padding-left:15px;"><img src="https://www.ihfc-iugg.org/viewer/map_icon/map2.png" alt="" border="0" width="25px" height=""></span><span style="width:50px;text-align:right;">0&ndash;25 |</span>
 									<span style="padding-left:15px;"><img src="https://www.ihfc-iugg.org/viewer/map_icon/map3.png" alt="" border="0" width="25px" height=""></span><span style="width:50px;text-align:right;">25&ndash;50 |</span>
 									<span style="padding-left:15px;"><img src="https://www.ihfc-iugg.org/viewer/map_icon/map4.png" alt="" border="0" width="25px" height=""></span><span style="width:50px;text-align:right;">50&ndash;75 |</span>
@@ -329,9 +246,9 @@ include('hindex.php');
 									<span style="padding-left:15px;"><img src="https://www.ihfc-iugg.org/viewer/map_icon/map9.png" alt="" border="0" width="25px" height=""></span><span style="width:50px;text-align:right;">&gt;500 |</span>
 							</div>
 							<div style="margin-top:15px">
-									<span><img src="http://www.ihfc-iugg.org/viewer/map_icon/marker_cluster_l1.png" alt="" border="0" width="25px" height="">
-									<img src="http://www.ihfc-iugg.org/viewer/map_icon/marker_cluster_l2.png" alt="" border="0" width="25px" height="">
-									<img src="http://www.ihfc-iugg.org/viewer/map_icon/marker_cluster_l3.png" alt="" border="0" width="25px" height="">
+									<span><img src="https://www.ihfc-iugg.org/viewer/map_icon/marker_cluster_l1.png" alt="" border="0" width="25px" height="">
+									<img src="https://www.ihfc-iugg.org/viewer/map_icon/marker_cluster_l2.png" alt="" border="0" width="25px" height="">
+									<img src="https://www.ihfc-iugg.org/viewer/map_icon/marker_cluster_l3.png" alt="" border="0" width="25px" height="">
 											&nbsp;Data cluster with X values</span>
 							</div>
 							</div>
@@ -398,7 +315,7 @@ include('hindex.php');
 		<script src='<?=base_url?>js/Control.FullScreen.js'></script>
 		<script src="<?=base_url?>js/bundle.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-contextmenu/1.4.0/leaflet.contextmenu.min.js" integrity="sha512-8sfQf8cr0KjCeN32YPfjvLU2cMvyY1lhCXTMfpTZ16CvwIzeVQtwtKlxeSqFs/TpXjKhp1Dcv77LQmn1VFaOZg==" crossorigin="anonymous"></script>
-		<script src='<?=base_url?>js/L.Graticule.js'></script>
+		
 		<script src='<?=base_url?>js/esri-leaflet.js'></script>
 		
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/OverlappingMarkerSpiderfier-Leaflet/0.2.6/oms.min.js"></script>
@@ -420,7 +337,7 @@ include('hindex.php');
 			// L.marker([39.77, -105.23]).bindPopup('This is Golden, CO.').addTo(cities);
 
 
-			var mbAttr = '&copy; <a href="http://ihfc-iugg.org/">www.ihfc-iugg.org</a>',
+			var mbAttr = '&copy; <a href="https://ihfc-iugg.org/">www.ihfc-iugg.org</a>',
 				mbUrl = 'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw';
 
 			var grayscale   = L.tileLayer(mbUrl, {id: 'mapbox/light-v9', tileSize: 512, zoomOffset: -1, attribution: mbAttr}),
