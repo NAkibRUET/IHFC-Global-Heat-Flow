@@ -22,8 +22,12 @@ include('hindex.php');
 		<link rel="stylesheet" type="text/css" href="<?=base_url?>css/L.Control.Zoomslider.css" />
 		<link rel="stylesheet" type="text/css" href="<?=base_url?>css/Control.FullScreen.css" />
 		<link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
-		<link rel="stylesheet" href="css/style.css">
-
+		<link rel="stylesheet" href="<?=base_url?>css/style.css">
+		<style>
+			.leaflet-control-attribution a{
+				font-size: inherit !important;
+			}
+		</style>
 	</head>
 	<body class="viewer">
 		<div class="navbar_area">
@@ -41,7 +45,7 @@ include('hindex.php');
 				<div class="row no-gutters">
 					<div class="col-sm-12 ">
 						<div class=" desktop_none">
-							<button type="button" class="btn btn-primary">Filter Map</button>
+							<button type="button" class="btn btn-primary">Filter Database</button>
 						</div>
 					</div>
 					<div class="col-lg-2 col-md-3 col-sm-12 ">
@@ -57,7 +61,7 @@ include('hindex.php');
 						</div>
 						<hr>
 							<div class="mt-3">
-								<h5 class="brosiclit">Filter Map</h5>
+								<h5 class="brosiclit">Filter Database</h5>
 							</div>
 							<!--- disable global search 
 								<div class="form-group mb-4">
@@ -230,27 +234,38 @@ include('hindex.php');
 							<!-- <hr style="border-top: 1px solid grey;" noshade> </hr> -->
 
 							<div id="legend">
-							<h5>Legend</h5>
-
-							<label for="legend">Heat-flow [mW/m<sup>2</sup>]</label>
-							<br/>
-							<div>
-									<span><img src="https://www.ihfc-iugg.org/viewer/map_icon/map1.png" alt="" border="0" width="25px" height=""></span><span style="width:50px;text-align:right;">&le; 0 |</span>
-									<span style="padding-left:15px;"><img src="https://www.ihfc-iugg.org/viewer/map_icon/map2.png" alt="" border="0" width="25px" height=""></span><span style="width:50px;text-align:right;">0&ndash;25 |</span>
-									<span style="padding-left:15px;"><img src="https://www.ihfc-iugg.org/viewer/map_icon/map3.png" alt="" border="0" width="25px" height=""></span><span style="width:50px;text-align:right;">25&ndash;50 |</span>
-									<span style="padding-left:15px;"><img src="https://www.ihfc-iugg.org/viewer/map_icon/map4.png" alt="" border="0" width="25px" height=""></span><span style="width:50px;text-align:right;">50&ndash;75 |</span>
-									<span style="padding-left:15px;"><img src="https://www.ihfc-iugg.org/viewer/map_icon/map5.png" alt="" border="0" width="25px" height=""></span><span style="width:50px;text-align:right;">75&ndash;100 |</span>
-									<span style="padding-left:15px;"><img src="https://www.ihfc-iugg.org/viewer/map_icon/map6.png" alt="" border="0" width="25px" height=""></span><span style="width:50px;text-align:right;">100&ndash;150 |</span>
-									<span style="padding-left:15px;"><img src="https://www.ihfc-iugg.org/viewer/map_icon/map7.png" alt="" border="0" width="25px" height=""></span><span style="width:50px;text-align:right;">150&ndash;250 |</span>
-									<span style="padding-left:15px;"><img src="https://www.ihfc-iugg.org/viewer/map_icon/map8.png" alt="" border="0" width="25px" height=""></span><span style="width:50px;text-align:right;">250&ndash;500 |</span>
-									<span style="padding-left:15px;"><img src="https://www.ihfc-iugg.org/viewer/map_icon/map9.png" alt="" border="0" width="25px" height=""></span><span style="width:50px;text-align:right;">&gt;500 |</span>
-							</div>
-							<div style="margin-top:15px">
+								<h5>Legend</h5>
+								<label for="legend">Heat-flow [mW/m<sup>2</sup>]</label>
+								<table>
+									<tbody>
+										<tr>
+											<td><img src="https://www.ihfc-iugg.org/viewer/map_icon/map1.png" alt="" border="0" width="18px" height=""><span style="width:50px;text-align:right;">&nbsp;&le; 0 </span></td>
+											<td><img src="https://www.ihfc-iugg.org/viewer/map_icon/map2.png" alt="" border="0" width="18px" height=""><span style="width:50px;text-align:right;">&nbsp;0&ndash;25 </span></td>
+										</tr>
+										<tr>
+											<td><img src="https://www.ihfc-iugg.org/viewer/map_icon/map3.png" alt="" border="0" width="18px" height=""><span style="width:50px;text-align:right;">&nbsp;25&ndash;50 </span></td>
+											<td><img src="https://www.ihfc-iugg.org/viewer/map_icon/map4.png" alt="" border="0" width="18px" height=""><span style="width:50px;text-align:right;">&nbsp;50&ndash;75 </span></td>
+										</tr>
+										<tr>
+											<td><img src="https://www.ihfc-iugg.org/viewer/map_icon/map5.png" alt="" border="0" width="18px" height=""><span style="width:50px;text-align:right;">&nbsp;75&ndash;100 </span></td>
+											<td><img src="https://www.ihfc-iugg.org/viewer/map_icon/map6.png" alt="" border="0" width="18px" height=""><span style="width:50px;text-align:right;">&nbsp;100&ndash;150 </span></td>
+										</tr>
+										<tr>
+											<td><img src="https://www.ihfc-iugg.org/viewer/map_icon/map7.png" alt="" border="0" width="18px" height=""><span style="width:50px;text-align:right;">&nbsp;150&ndash;250 </span></td>
+											<td><img src="https://www.ihfc-iugg.org/viewer/map_icon/map8.png" alt="" border="0" width="18px" height=""><span style="width:50px;text-align:right;">&nbsp;250&ndash;500 </span></td>
+										</tr>
+										<tr>
+											<td><img src="https://www.ihfc-iugg.org/viewer/map_icon/map9.png" alt="" border="0" width="18px" height=""><span style="width:50px;text-align:right;">&nbsp;&gt; 500 </span></td>
+										</tr>
+									</tbody>
+								</table>
+							
+								<div style="margin-top:15px">
 									<span><img src="https://www.ihfc-iugg.org/viewer/map_icon/marker_cluster_l1.png" alt="" border="0" width="25px" height="">
 									<img src="https://www.ihfc-iugg.org/viewer/map_icon/marker_cluster_l2.png" alt="" border="0" width="25px" height="">
 									<img src="https://www.ihfc-iugg.org/viewer/map_icon/marker_cluster_l3.png" alt="" border="0" width="25px" height="">
 											&nbsp;Data cluster with X values</span>
-							</div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -406,63 +421,63 @@ include('hindex.php');
 				if(heatflow == 0){
 					var myIcon = L.icon({
 						iconUrl: 'map_icon/map1.png',
-						iconSize: [28, 25],
+						iconSize: [32, 24],
 						iconAnchor: [9, 21],
 						popupAnchor: [0, -14]
 						});
 				}else if(heatflow > 0 && heatflow <= 25 ){
 					var myIcon = L.icon({
 						iconUrl: 'map_icon/map2.png',
-						iconSize: [28, 25],
+						iconSize: [32, 24],
 						iconAnchor: [9, 21],
 						popupAnchor: [0, -14]
 						});
 				}else if(heatflow > 25 && heatflow <= 50 ){
 					var myIcon = L.icon({
 						iconUrl: 'map_icon/map3.png',
-						iconSize: [28, 25],
+						iconSize: [32, 24],
 						iconAnchor: [9, 21],
 						popupAnchor: [0, -14]
 						});
 				}else if(heatflow > 50 && heatflow <= 75 ){
 					var myIcon = L.icon({
 						iconUrl: 'map_icon/map4.png',
-						iconSize: [28, 25],
+						iconSize: [32, 24],
 						iconAnchor: [9, 21],
 						popupAnchor: [0, -14]
 						});
 				}else if(heatflow > 75 && heatflow <= 100 ){
 					var myIcon = L.icon({
 						iconUrl: 'map_icon/map5.png',
-						iconSize: [28, 25],
+						iconSize: [32, 24],
 						iconAnchor: [9, 21],
 						popupAnchor: [0, -14]
 						});
 				}else if(heatflow > 100 && heatflow <= 150 ){
 					var myIcon = L.icon({
 						iconUrl: 'map_icon/map6.png',
-						iconSize: [28, 25],
+						iconSize: [32, 24],
 						iconAnchor: [9, 21],
 						popupAnchor: [0, -14]
 						});
 				}else if(heatflow > 150 && heatflow <= 250 ){
 					var myIcon = L.icon({
 						iconUrl: 'map_icon/map7.png',
-						iconSize: [28, 25],
+						iconSize: [32, 24],
 						iconAnchor: [9, 21],
 						popupAnchor: [0, -14]
 						});
 				}else if(heatflow > 250 && heatflow <= 500 ){
 					var myIcon = L.icon({
 						iconUrl: 'map_icon/map8.png',
-						iconSize: [28, 25],
+						iconSize: [32, 24],
 						iconAnchor: [9, 21],
 						popupAnchor: [0, -14]
 						});
 				}else{
 					var myIcon = L.icon({
 						iconUrl: 'map_icon/map9.png',
-						iconSize: [28, 25],
+						iconSize: [32, 24],
 						iconAnchor: [9, 21],
 						popupAnchor: [0, -15]
 						});
