@@ -517,36 +517,7 @@ include('hindex.php');
 							hideControlContainer: true
 						}).addTo(map);
 
-		// 	<?php //if(isset($_POST['grid']) && $_POST['grid'] == 'yes'){ ?>
-		// 	// Add a basic graticule with divisions every 20 degrees
-		// 	// as a layer on a map
-		// 	L.graticule().addTo(map);
-
-		// 	// Specify divisions every 10 degrees
-		// 	L.graticule({ interval: 20 }).addTo(map);
-
-		// 	// Specify bold red lines instead of thin grey lines
-		// 	L.graticule({
-		// 			sphere: true,
-		// 			style: {
-		// 				color: '#777',
-		// 				opacity: 0.1,
-		// 				// fillColor: '#ccf',
-
-		// 				weight: 0.3
-		// 			}
-		// 		}).addTo(map);
-
-		// 		L.graticule({
-		// 			style: {
-		// 				color: '#777',
-		// 				weight: 0.3,
-		// 				opacity: 0.1
-		// 			}
-		// 		}).addTo(map);
-
-		// <?php // } ?>
-
+		
 
 		// oms starts
 
@@ -604,16 +575,7 @@ include('hindex.php');
 			
 		
 		$('#grid').on('change', function() {
-			//alert( this.value );
-			// var grat = L.graticule({
-			// 		sphere: true,
-			// 		style: {
-			// 			color: '#777',
-			// 			opacity: 0.1,
-			// 			weight: 0.3
-			// 		}
-			// 	});
-			// var grat2 = L.graticule({ interval: 20 }).addTo(map);
+
 			
 			if(this.value == "yes"){
 				grat.addTo(map);
