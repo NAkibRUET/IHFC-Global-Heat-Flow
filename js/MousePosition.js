@@ -60,6 +60,6 @@ function latFormate(value) {
   if (value > 0) return roundToTwoDecimals(value) + " N";
   else return roundToTwoDecimals(value) + " S";
 }
-function roundToTwoDecimals(num) {
+function roundToFiveDecimals(num) {
   return Math.round((num + Number.EPSILON) * 100000) / 100000;
 }

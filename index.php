@@ -22,7 +22,7 @@ include('hindex.php');
 		<link rel="stylesheet" type="text/css" href="<?=base_url?>css/L.Control.Zoomslider.css" />
 		<link rel="stylesheet" type="text/css" href="<?=base_url?>css/Control.FullScreen.css" />
 		<link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
-		<link rel="stylesheet" href="<?=base_url?>css/style.css">
+		<link rel="stylesheet" href="css/style.css">
 
 	</head>
 	<body class="viewer">
@@ -309,7 +309,7 @@ include('hindex.php');
 		<script src="<?=base_url?>js/custom.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin="anonymous"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/leaflet.markercluster.js" integrity="sha512-MQlyPV+ol2lp4KodaU/Xmrn+txc1TP15pOBF/2Sfre7MRsA/pB4Vy58bEqe9u7a7DczMLtU5wT8n7OblJepKbg==" crossorigin="anonymous"></script>
-		<script src='<?=base_url?>js/betterScale.js'></script>
+		<script src='js/betterScale.js'></script>
 		<script src='<?=base_url?>js/MousePosition.js'></script>
 		<script src='<?=base_url?>js/L.Control.Zoomslider.js'></script>
 		<script src='<?=base_url?>js/Control.FullScreen.js'></script>
@@ -488,7 +488,7 @@ include('hindex.php');
 
 				//add better scale
 
-				L.control.betterscale().addTo(map);
+				L.control.betterscale({metric: true, imperial: false}).addTo(map);
 				L.control.mousePosition().addTo(map);
 
 			
