@@ -2,6 +2,7 @@
 include_once('config.php');
 include_once('functions.php');
 include('hindex.php');
+//echo(count($all_map_data));
 ?>
 
 <!DOCTYPE html>
@@ -38,6 +39,7 @@ include('hindex.php');
 					</a>
 				</div>
 				<h1 class="page-header"><?=SITENAME?></h1>
+				<button type="button" class="helpbtn btn btn-light" data-toggle="modal" data-target=".bd-example-modal-lg"><i class="fa fa-question"></i></button>
 			</nav>
 		</div>
 		<div class="containerFluid">
@@ -179,11 +181,12 @@ include('hindex.php');
 											<div class="form-check">
 												<label><input checked class="form-check-input" type="radio" id="domain" name="domain" value="" <?php if(isset($_POST['domain']) && $_POST['domain'] == ''){ echo 'checked'; }?>>All</label>
 											</div>
-
+											<br>
+											
 											<div class="form-check">
 											<label><input class="form-check-input" type="radio" id="domain" name="domain" value="marine" <?php if(isset($_POST['domain']) && $_POST['domain'] == 'marine'){ echo 'checked'; }?>>Marine</label>
 											</div>
-
+											<br>
 											<div class="form-check">
 											<label><input class="form-check-input" type="radio" id="domain" name="domain" value="continental" <?php if(isset($_POST['domain']) && $_POST['domain'] == 'continental'){ echo 'checked'; }?>>Continental</label>
 											</div>
@@ -191,29 +194,59 @@ include('hindex.php');
 								</div>
 
 
-								<div class="form-group mb-3">
+								<div class="form-group mb-3 pb-3"  style="border-bottom:1px solid #e5e5e5;">
 									<label for="search"> Heat-Flow [mW/m<sup>2</sup>]</label>
-									<input type="text" id="heatflow" style="border:0; color:#E31E24; font-weight:bold; font-size:14px; width:38%; overflow: visible;">
+									<div class="form-row mb-3">
+										<div class="col-6">
+											<input type="number" class="form-control_temp" 
+											oninput="heatFlowControl('min')" name="min_heat_flow"
+											placeholder="Min" id="min_heat_flow" value="<?php if(isset($_POST['min_heat_flow'])){ echo $_POST['min_heat_flow']; }?>" />
+										</div>
+										<div class="col-6">
+											<input type="number" class="form-control_temp" oninput="heatFlowControl('max')" name="max_heat_flow" 
+											placeholder="Max" id="max_heat_flow" value="<?php if(isset($_POST['max_heat_flow'])){ echo $_POST['max_heat_flow']; }?>" />
+										</div>
+									</div>
+								
 									<div id="slider-range"></div>
-									<input type="hidden" name="min_heat_flow" id="min_heat_flow" value="<?php if(isset($_POST['min_heat_flow']) && $_POST['min_heat_flow'] > 0){ echo $_POST['min_heat_flow']; }?>" />
-									<input type="hidden" name="max_heat_flow" id="max_heat_flow" value="<?php if(isset($_POST['max_heat_flow']) && $_POST['max_heat_flow'] > 0){ echo $_POST['max_heat_flow']; }?>" />
+									
+								
 								</div>
 
-								<div class="form-group mb-3">
+								<div class="form-group mb-3 pb-3" style="border-bottom:1px solid #e5e5e5;">
 									<label for="search"> Depth [m]</label>
-									<input type="text" id="depth" style="border:0; color:#E31E24; font-weight:bold; font-size:14px; width:38%; overflow: visible;">
+									<div class="form-row mb-3">
+										<div class="col-6">
+											
+											<input type="number" class="form-control_temp" placeholder="Min" oninput="depthControl('min')"name="mind" id="mind" value="<?php if(isset($_POST['mind']) && $_POST['mind'] > 0){ echo $_POST['mind']; }?>" />
+										</div>
+										<div class="col-6">
+											
+											<input type="number" class="form-control_temp" placeholder="Max" oninput="depthControl('max')"name="maxd" id="maxd" value="<?php if(isset($_POST['maxd']) && $_POST['maxd'] > 0){ echo $_POST['maxd']; }?>" />
+										</div>
+									</div>
 									<div id="slider-range2"></div>
-									<input type="hidden" name="mind" id="mind" value="<?php if(isset($_POST['mind']) && $_POST['mind'] > 0){ echo $_POST['mind']; }?>" />
-									<input type="hidden" name="maxd" id="maxd" value="<?php if(isset($_POST['maxd']) && $_POST['maxd'] > 0){ echo $_POST['maxd']; }?>" />
+									
+									
 								</div>
 
 
 								<div class="form-group mb-3">
 									<label for="search"> Years</label>
-									<input type="text" id="year" style="border:0; color:#E31E24; font-weight:bold; font-size:14px; width:38%; overflow: visible;">
+									
+									<div class="form-row mb-3">
+										<div class="col-6">
+											
+											<input type="number" class="form-control_temp" placeholder="Min" oninput="yearControl('min')"name="min_year" id="min_year" value="<?php if(isset($_POST['min_year']) && $_POST['min_year'] > 0){ echo $_POST['min_year']; }?>" />
+										</div>
+										<div class="col-6">
+											
+											<input type="number" class="form-control_temp" placeholder="Max" oninput="yearControl('max')"name="max_year" id="max_year" value="<?php if(isset($_POST['max_year']) && $_POST['max_year'] > 0){ echo $_POST['max_year']; }?>" />
+										</div>
+									</div>
 									<div id="slider-range3"></div>
-									<input type="hidden" name="min_year" id="min_year" value="<?php if(isset($_POST['min_year']) && $_POST['min_year'] > 0){ echo $_POST['min_year']; }?>" />
-									<input type="hidden" name="max_year" id="max_year" value="<?php if(isset($_POST['max_year']) && $_POST['max_year'] > 0){ echo $_POST['max_year']; }?>" />
+									
+									
 								</div>
 
 
@@ -229,7 +262,6 @@ include('hindex.php');
 										</div>
 									</div>
 								</div>
-
 							<br/>
 							<!-- <hr style="border-top: 1px solid grey;" noshade> </hr> -->
 
@@ -239,31 +271,31 @@ include('hindex.php');
 								<table>
 									<tbody>
 										<tr>
-											<td><img src="https://www.ihfc-iugg.org/viewer/map_icon/map1.png" alt="" border="0" width="18px" height=""><span style="width:50px;text-align:right;">&nbsp;&le; 0 </span></td>
-											<td><img src="https://www.ihfc-iugg.org/viewer/map_icon/map2.png" alt="" border="0" width="18px" height=""><span style="width:50px;text-align:right;">&nbsp;0&ndash;25 </span></td>
+											<td><img src="https://www.ihfc-iugg.org/viewer/map_icon/map1.png" alt="" class="mb-2" width="18px" height=""><span class="mb-2"  style="width:50px;text-align:right;">&nbsp;&le; 0 </span></td>
+											<td><img src="https://www.ihfc-iugg.org/viewer/map_icon/map2.png" alt="" width="18px" class="mb-2"  height=""><span class="mb-2"  style="width:50px;text-align:right;">&nbsp;0&ndash;25 </span></td>
 										</tr>
 										<tr>
-											<td><img src="https://www.ihfc-iugg.org/viewer/map_icon/map3.png" alt="" border="0" width="18px" height=""><span style="width:50px;text-align:right;">&nbsp;25&ndash;50 </span></td>
-											<td><img src="https://www.ihfc-iugg.org/viewer/map_icon/map4.png" alt="" border="0" width="18px" height=""><span style="width:50px;text-align:right;">&nbsp;50&ndash;75 </span></td>
+											<td><img src="https://www.ihfc-iugg.org/viewer/map_icon/map3.png" alt="" width="18px" class="mb-2"  height=""><span class="mb-2"  style="width:50px;text-align:right;">&nbsp;25&ndash;50 </span></td>
+											<td><img src="https://www.ihfc-iugg.org/viewer/map_icon/map4.png" alt="" width="18px" class="mb-2"  height=""><span class="mb-2"  style="width:50px;text-align:right;">&nbsp;50&ndash;75 </span></td>
 										</tr>
 										<tr>
-											<td><img src="https://www.ihfc-iugg.org/viewer/map_icon/map5.png" alt="" border="0" width="18px" height=""><span style="width:50px;text-align:right;">&nbsp;75&ndash;100 </span></td>
-											<td><img src="https://www.ihfc-iugg.org/viewer/map_icon/map6.png" alt="" border="0" width="18px" height=""><span style="width:50px;text-align:right;">&nbsp;100&ndash;150 </span></td>
+											<td><img src="https://www.ihfc-iugg.org/viewer/map_icon/map5.png" alt="" width="18px" class="mb-2"  height=""><span class="mb-2"  style="width:50px;text-align:right;">&nbsp;75&ndash;100 </span></td>
+											<td><img src="https://www.ihfc-iugg.org/viewer/map_icon/map6.png" alt="" width="18px" class="mb-2"  height=""><span class="mb-2"  style="width:50px;text-align:right;">&nbsp;100&ndash;150 </span></td>
 										</tr>
 										<tr>
-											<td><img src="https://www.ihfc-iugg.org/viewer/map_icon/map7.png" alt="" border="0" width="18px" height=""><span style="width:50px;text-align:right;">&nbsp;150&ndash;250 </span></td>
-											<td><img src="https://www.ihfc-iugg.org/viewer/map_icon/map8.png" alt="" border="0" width="18px" height=""><span style="width:50px;text-align:right;">&nbsp;250&ndash;500 </span></td>
+											<td><img src="https://www.ihfc-iugg.org/viewer/map_icon/map7.png" alt="" width="18px" class="mb-2" height=""><span class="mb-2"  style="width:50px;text-align:right;">&nbsp;150&ndash;250 </span></td>
+											<td><img src="https://www.ihfc-iugg.org/viewer/map_icon/map8.png" alt="" width="18px" class="mb-2" height=""><span class="mb-2"  style="width:50px;text-align:right;">&nbsp;250&ndash;500 </span></td>
 										</tr>
 										<tr>
-											<td><img src="https://www.ihfc-iugg.org/viewer/map_icon/map9.png" alt="" border="0" width="18px" height=""><span style="width:50px;text-align:right;">&nbsp;&gt; 500 </span></td>
+											<td><img src="https://www.ihfc-iugg.org/viewer/map_icon/map9.png" alt="" width="18px" class="mb-2" height=""><span class="mb-2"  style="width:50px;text-align:right;">&nbsp;&gt; 500 </span></td>
 										</tr>
 									</tbody>
 								</table>
 							
 								<div style="margin-top:15px">
-									<span><img src="https://www.ihfc-iugg.org/viewer/map_icon/marker_cluster_l1.png" alt="" border="0" width="25px" height="">
-									<img src="https://www.ihfc-iugg.org/viewer/map_icon/marker_cluster_l2.png" alt="" border="0" width="25px" height="">
-									<img src="https://www.ihfc-iugg.org/viewer/map_icon/marker_cluster_l3.png" alt="" border="0" width="25px" height="">
+									<span><img src="https://www.ihfc-iugg.org/viewer/map_icon/marker_cluster_l1.png" alt="" width="25px" height="">
+									<img src="https://www.ihfc-iugg.org/viewer/map_icon/marker_cluster_l2.png" alt="" width="25px" height="">
+									<img src="https://www.ihfc-iugg.org/viewer/map_icon/marker_cluster_l3.png" alt="" width="25px" height="">
 											&nbsp;Data cluster with X values</span>
 								</div>
 							</div>
@@ -299,6 +331,37 @@ include('hindex.php');
 			</form>
 		</div>
 
+		<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-xl">
+				
+				<div class="modal-content" style="background: #fff;">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Purpose and Usabilities</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close" style="border:none !important; outline:none !important;">
+						<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="p-3">
+						Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim mollitia, illo ad illum quidem iure fuga voluptatibus, nisi, hic ratione autem expedita. Explicabo ullam hic ratione temporibus suscipit debitis alias!
+						Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde cum explicabo id exercitationem nostrum placeat cumque non nulla libero amet doloribus velit aut, ipsum provident ipsam officiis labore illum dolor.
+						<br>
+						<br>
+						Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim mollitia, illo ad illum quidem iure fuga voluptatibus, nisi, hic ratione autem expedita. Explicabo ullam hic ratione temporibus suscipit debitis alias!
+						Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde cum explicabo id exercitationem nostrum placeat cumque non nulla libero amet doloribus velit aut, ipsum provident ipsam officiis labore illum dolor.
+						<br>
+						<br>
+						Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim mollitia, illo ad illum quidem iure fuga voluptatibus, nisi, hic ratione autem expedita. Explicabo ullam hic ratione temporibus suscipit debitis alias!
+						Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde cum explicabo id exercitationem nostrum placeat cumque non nulla libero amet doloribus velit aut, ipsum provident ipsam officiis labore illum dolor.
+						<br>
+						<br>
+						Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim mollitia, illo ad illum quidem iure fuga voluptatibus, nisi, hic ratione autem expedita. Explicabo ullam hic ratione temporibus suscipit debitis alias!
+						Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde cum explicabo id exercitationem nostrum placeat cumque non nulla libero amet doloribus velit aut, ipsum provident ipsam officiis labore illum dolor.
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="dataCount"
+		>Data Count: <?php echo count($all_map_data); ?></div>
 		<?php
 			$heatflow_sql = "SELECT MAX(heatflow) AS mx_hf, MIN(heatflow) AS mn_hf FROM `IHFC2010`";
 			$stmt = $conn->prepare($heatflow_sql);
@@ -484,7 +547,7 @@ include('hindex.php');
 
 				}
 				var popup = '<br>Heat-Flow Density</br> <h4 class="pop-header">'+ markers[i].heat_fl + ' <span> mW/m<sup>2</sup> </h4>' +
-				<!-- '<div class="kreis">test</div>'+    -->
+				// <!-- '<div class="kreis">test</div>'+    -->
 				'<table> <tr> <td> <b>Site Name: </b> </td> <td style="padding-left:10px;"> '+ markers[i].name + '</td> </tr>' +
 				'<tr> <td><b>Coordinates: </b> </td> <td style="padding-left:10px;">Lat ' + markers[i].lat +' / Long ' + markers[i].lng +'</td></tr>' +
 				'<tr> <td> <b>Domain: </b> </td> <td style="padding-left:10px;">' + markers[i].dnm + '</td> </tr>' +
@@ -651,13 +714,15 @@ include('hindex.php');
 				$(".chosen-select").chosen();
 			});
 
+			
+
 			// ##### Heat Flow ##### 
 			//$(function() {
 				var min_val;
 				var max_val;
 				var def_min_val = parseFloat(<?php echo $heatflow_data->mn_hf; ?>);
 				var def_max_val = parseFloat(<?php echo $heatflow_data->mx_hf; ?>);
-
+				
 				<?php
 					if(isset($_POST['min_heat_flow']) && $_POST['min_heat_flow'] > 0){
 						?>
@@ -680,13 +745,24 @@ include('hindex.php');
 					}
 				?>
 
+				function heatFlowControl(type){
+					if(type == 'min'){
+						min_val = $('#min_heat_flow').val();
+						//console.log(def_min_val);
+					}
+					else if(type=='max'){
+						max_val = $('#max_heat_flow').val();
+					}
+					$("#slider-range").slider('values',[min_val, max_val]);
+				}
 				$( "#slider-range" ).slider({
 					range: true,
 					min: def_min_val,
 					max: def_max_val,
 					values: [ min_val, max_val ],
 					slide: function( event, ui ) {
-						$( "#heatflow" ).val( ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+						$( "#heatflow1" ).val( ui.values[ 0 ] );
+						$( "#heatflow2" ).val( ui.values[ 1 ] );
 						$( "#min_heat_flow" ).val(ui.values[ 0 ]);
 						$( "#max_heat_flow" ).val(ui.values[ 1 ]);
 						/*setTimeout(function(){
@@ -694,18 +770,20 @@ include('hindex.php');
 						}, 500);*/
 					}
 				});
-
-				$( "#heatflow" ).val( $( "#slider-range" ).slider( "values", 0 ) + " - " + $( "#slider-range" ).slider( "values", 1 ) );
-				-->
+				// $("#heatflow1").on("keyup",function(e){
+					
+				// });
+				// $( "#heatflow1" ).val( $( "#slider-range" ).slider( "values", 0 ) + " - " + $( "#slider-range" ).slider( "values", 1 ) );
+				//-->
 
 			//-- ##### Year ##### -->
 
-			$(function() {
+			
 				var miny_val;
 				var maxy_val;
 				var def_miny_val = parseFloat(<?php echo $year_data->mn_y; ?>);
 				var def_maxy_val = parseFloat(<?php echo $year_data->mx_y; ?>);
-
+				
 				<?php
 					if(isset($_POST['min_year']) && $_POST['min_year'] > 0){
 						?>
@@ -727,14 +805,25 @@ include('hindex.php');
 						<?php
 					}
 				?>
-
+				function yearControl(type){
+					if(type == 'min'){
+						miny_val = $('#min_year').val();
+						//console.log(def_min_val);
+					}
+					else if(type=='max'){
+						maxy_val = $('#max_year').val();
+					}
+					$("#slider-range3").slider('values',[miny_val, maxy_val]);
+				}
 				$( "#slider-range3" ).slider({
 					range: true,
 					min: def_miny_val,
 					max: def_maxy_val,
 					values: [ miny_val, maxy_val ],
 					slide: function( event, ui ) {
-						$( "#year" ).val( ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+						$( "#year1" ).val( ui.values[ 0 ]);
+						$( "#year2" ).val( ui.values[ 1 ]);
+						 
 						$( "#min_year" ).val(ui.values[ 0 ]);
 						$( "#max_year" ).val(ui.values[ 1 ]);
 						/*setTimeout(function(){
@@ -760,7 +849,7 @@ include('hindex.php');
 
 				var mind;
 				var maxd;
-							var def_mind_val = parseFloat(<?php echo $mind_data->mn_mind; ?>);
+				var def_mind_val = parseFloat(<?php echo $mind_data->mn_mind; ?>);
 				var def_maxd_val = parseFloat(<?php echo $maxd_data->mx_maxd; ?>);
 
 
@@ -787,14 +876,24 @@ include('hindex.php');
 						<?php
 					}
 				?>
-
+				function depthControl(type){
+					if(type == 'min'){
+						mind = $('#mind').val();
+						//console.log(def_min_val);
+					}
+					else if(type=='max'){
+						maxd = $('#maxd').val();
+					}
+					$("#slider-range2").slider('values',[mind, maxd]);
+				}
 				$( "#slider-range2" ).slider({
 					range: true,
 					min: def_mind_val,
 					max: def_maxd_val,
 					values: [ mind, maxd ],
 					slide: function( event, ui ) {
-						$( "#depth" ).val( ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+						$( "#depth1" ).val( ui.values[ 0 ]);
+						$( "#depth2" ).val( ui.values[ 1 ]);
 						$( "#mind" ).val(ui.values[ 0 ]);
 						$( "#maxd" ).val(ui.values[ 1 ]);
 						/*setTimeout(function(){
@@ -805,7 +904,7 @@ include('hindex.php');
 
 				$( "#depth" ).val( $( "#slider-range2" ).slider( "values", 0 ) + " - " + $( "#slider-range2" ).slider( "values", 1 ) );
 
-			});
+			
 
 			/*$("#search, #sitename, #country, #continent, #domain, #mind, #maxd, #year, #reference").change(function() {
 				this.form.submit();
