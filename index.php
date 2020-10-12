@@ -499,65 +499,65 @@ include('hindex.php');
 				if(heatflow == 0){
 					var myIcon = L.icon({
 						iconUrl: 'map_icon/map1.png',
-						iconSize: [20, 24],
-						iconAnchor: [0, 21],
+						iconSize: [18, 30],
+						iconAnchor: [10, 30],
 						popupAnchor: [0, -14]
 						});
 				}else if(heatflow > 0 && heatflow <= 25 ){
 					var myIcon = L.icon({
 						iconUrl: 'map_icon/map2.png',
-						iconSize: [20, 24],
-						iconAnchor: [0, 21],
+						iconSize: [18, 30],
+						iconAnchor: [10, 30],
 						popupAnchor: [0, -14]
 						});
 				}else if(heatflow > 25 && heatflow <= 50 ){
 					var myIcon = L.icon({
 						iconUrl: 'map_icon/map3.png',
-						iconSize: [18, 24],
-						iconAnchor: [0, 21],
+						iconSize: [18, 30],
+						iconAnchor: [10, 30],
 						popupAnchor: [0, -14]
 						});
 				}else if(heatflow > 50 && heatflow <= 75 ){
 					var myIcon = L.icon({
 						iconUrl: 'map_icon/map4.png',
-						iconSize: [18, 24],
-						iconAnchor: [0, 21],
+						iconSize: [18, 30],
+						iconAnchor: [10, 30],
 						popupAnchor: [0, -14]
 						});
 				}else if(heatflow > 75 && heatflow <= 100 ){
 					var myIcon = L.icon({
 						iconUrl: 'map_icon/map5.png',
-						iconSize: [18, 24],
-						iconAnchor: [0, 21],
+						iconSize: [18, 30],
+						iconAnchor: [10, 30],
 						popupAnchor: [0, -14]
 						});
 				}else if(heatflow > 100 && heatflow <= 150 ){
 					var myIcon = L.icon({
 						iconUrl: 'map_icon/map6.png',
-						iconSize: [18, 24],
-						iconAnchor: [0, 21],
+						iconSize: [18, 30],
+						iconAnchor: [10, 30],
 						popupAnchor: [0, -14]
 						});
 				}else if(heatflow > 150 && heatflow <= 250 ){
 					var myIcon = L.icon({
 						iconUrl: 'map_icon/map7.png',
-						iconSize: [18, 24],
-						iconAnchor: [0, 21],
+						iconSize: [18, 30],
+						iconAnchor: [10, 30],
 						popupAnchor: [0, -14]
 						});
 				}else if(heatflow > 250 && heatflow <= 500 ){
 					var myIcon = L.icon({
 						iconUrl: 'map_icon/map8.png',
-						iconSize: [18, 24],
-						iconAnchor: [0, 21],
+						iconSize: [18, 30],
+						iconAnchor: [10, 30],
 						popupAnchor: [0, -14]
 						});
 				}else{
 					var myIcon = L.icon({
 						iconUrl: 'map_icon/map9.png',
-						iconSize: [18, 24],
-						iconAnchor: [0, 21],
-						popupAnchor: [0, -15]
+						iconSize: [18, 30],
+						iconAnchor: [10, 30],
+						popupAnchor: [0, -14]
 						});
 
 				}
