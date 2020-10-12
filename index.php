@@ -264,41 +264,6 @@ include('hindex.php');
 								</div>
 							<br/>
 							<!-- <hr style="border-top: 1px solid grey;" noshade> </hr> -->
-
-							<div id="legend">
-								<h5>Legend</h5>
-								<label for="legend">Heat-flow [mW/m<sup>2</sup>]</label>
-								<table>
-									<tbody>
-										<tr>
-											<td><img src="https://www.ihfc-iugg.org/viewer/map_icon/map1.png" alt="" class="mb-2" width="18px" height=""><span class="mb-2"  style="width:50px;text-align:right;">&nbsp;&le; 0 </span></td>
-											<td><img src="https://www.ihfc-iugg.org/viewer/map_icon/map2.png" alt="" width="18px" class="mb-2"  height=""><span class="mb-2"  style="width:50px;text-align:right;">&nbsp;0&ndash;25 </span></td>
-										</tr>
-										<tr>
-											<td><img src="https://www.ihfc-iugg.org/viewer/map_icon/map3.png" alt="" width="18px" class="mb-2"  height=""><span class="mb-2"  style="width:50px;text-align:right;">&nbsp;25&ndash;50 </span></td>
-											<td><img src="https://www.ihfc-iugg.org/viewer/map_icon/map4.png" alt="" width="18px" class="mb-2"  height=""><span class="mb-2"  style="width:50px;text-align:right;">&nbsp;50&ndash;75 </span></td>
-										</tr>
-										<tr>
-											<td><img src="https://www.ihfc-iugg.org/viewer/map_icon/map5.png" alt="" width="18px" class="mb-2"  height=""><span class="mb-2"  style="width:50px;text-align:right;">&nbsp;75&ndash;100 </span></td>
-											<td><img src="https://www.ihfc-iugg.org/viewer/map_icon/map6.png" alt="" width="18px" class="mb-2"  height=""><span class="mb-2"  style="width:50px;text-align:right;">&nbsp;100&ndash;150 </span></td>
-										</tr>
-										<tr>
-											<td><img src="https://www.ihfc-iugg.org/viewer/map_icon/map7.png" alt="" width="18px" class="mb-2" height=""><span class="mb-2"  style="width:50px;text-align:right;">&nbsp;150&ndash;250 </span></td>
-											<td><img src="https://www.ihfc-iugg.org/viewer/map_icon/map8.png" alt="" width="18px" class="mb-2" height=""><span class="mb-2"  style="width:50px;text-align:right;">&nbsp;250&ndash;500 </span></td>
-										</tr>
-										<tr>
-											<td><img src="https://www.ihfc-iugg.org/viewer/map_icon/map9.png" alt="" width="18px" class="mb-2" height=""><span class="mb-2"  style="width:50px;text-align:right;">&nbsp;&gt; 500 </span></td>
-										</tr>
-									</tbody>
-								</table>
-							
-								<div style="margin-top:15px">
-									<span><img src="https://www.ihfc-iugg.org/viewer/map_icon/marker_cluster_l1.png" alt="" width="25px" height="">
-									<img src="https://www.ihfc-iugg.org/viewer/map_icon/marker_cluster_l2.png" alt="" width="25px" height="">
-									<img src="https://www.ihfc-iugg.org/viewer/map_icon/marker_cluster_l3.png" alt="" width="25px" height="">
-											&nbsp;Data cluster with X values</span>
-								</div>
-							</div>
 						</div>
 					</div>
 
@@ -360,8 +325,47 @@ include('hindex.php');
 				</div>
 			</div>
 		</div>
-		<div class="dataCount"
-		>Data Count: <?php echo count($all_map_data); ?></div>
+		<div class="dataCount">
+			<span style="color:black; text-align: center"> Data Count: <?php echo count($all_map_data); ?></span>
+		</div>
+		<div id="legendShowBtn" class="legendShow" onclick="showLegend()">
+			<span style="color:black; text-align: center;"><i class="fa fa-chevron-left" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp; Show Legend</span>
+		</div>										
+		<div id="legend" class="legendContainer">
+			<span onclick="hideLegend()" class="float-right mr-2"><i class="fa fa-times"></i></span>
+			<h5>Legend</h5>
+			<label for="legend">Heat-flow [mW/m<sup>2</sup>]</label>
+			<table>
+				<tbody>
+					<tr>
+						<td><img src="https://www.ihfc-iugg.org/viewer/map_icon/map1.png" alt="" class="mb-2" width="15px" height=""><span class="mb-2"  style="font-size:12px; font-weight:bold; text-align:right;">&nbsp;&le; 0 </span></td>
+						<td><img src="https://www.ihfc-iugg.org/viewer/map_icon/map2.png" alt="" width="15px" class="mb-2 ml-3"  height=""><span class="mb-2"  style="font-size:12px; font-weight:bold; text-align:right;">&nbsp;0&ndash;25 </span></td>
+					</tr>
+					<tr>
+						<td><img src="https://www.ihfc-iugg.org/viewer/map_icon/map3.png" alt="" width="15px" class="mb-2"  height=""><span class="mb-2"  style="font-size:12px; font-weight:bold; text-align:right;">&nbsp;25&ndash;50 </span></td>
+						<td><img src="https://www.ihfc-iugg.org/viewer/map_icon/map4.png" alt="" width="15px" class="mb-2 ml-3"  height=""><span class="mb-2"  style="font-size:12px; font-weight:bold; text-align:right;">&nbsp;50&ndash;75 </span></td>
+					</tr>
+					<tr>
+						<td><img src="https://www.ihfc-iugg.org/viewer/map_icon/map5.png" alt="" width="15px" class="mb-2"  height=""><span class="mb-2"  style="font-size:12px; font-weight:bold; text-align:right;">&nbsp;75&ndash;100 </span></td>
+						<td><img src="https://www.ihfc-iugg.org/viewer/map_icon/map6.png" alt="" width="15px" class="mb-2 ml-3"  height=""><span class="mb-2"  style="font-size:12px; font-weight:bold; text-align:right;">&nbsp;100&ndash;150 </span></td>
+					</tr>
+					<tr>
+						<td><img src="https://www.ihfc-iugg.org/viewer/map_icon/map7.png" alt="" width="15px" class="mb-2" height=""><span class="mb-2"  style="font-size:12px; font-weight:bold; text-align:right;">&nbsp;150&ndash;250 </span></td>
+						<td><img src="https://www.ihfc-iugg.org/viewer/map_icon/map8.png" alt="" width="15px" class="mb-2 ml-3" height=""><span class="mb-2"  style="font-size:12px; font-weight:bold; text-align:right;">&nbsp;250&ndash;500 </span></td>
+					</tr>
+					<tr>
+						<td><img src="https://www.ihfc-iugg.org/viewer/map_icon/map9.png" alt="" width="15px" class="mb-2" height=""><span class="mb-2"  style="font-size:12px; font-weight:bold; text-align:right;">&nbsp;&gt; 500 </span></td>
+					</tr>
+				</tbody>
+			</table>
+		
+			<div style="margin-top:15px">
+				<span><img src="https://www.ihfc-iugg.org/viewer/map_icon/marker_cluster_l1.png" alt="" width="25px" height="">
+				<img src="https://www.ihfc-iugg.org/viewer/map_icon/marker_cluster_l2.png" alt="" width="25px" height="">
+				<img src="https://www.ihfc-iugg.org/viewer/map_icon/marker_cluster_l3.png" alt="" width="25px" height="">
+						&nbsp;Data cluster with X values</span>
+			</div>
+		</div>
 		<?php
 			$heatflow_sql = "SELECT MAX(heatflow) AS mx_hf, MIN(heatflow) AS mn_hf FROM `IHFC2010`";
 			$stmt = $conn->prepare($heatflow_sql);
@@ -406,6 +410,17 @@ include('hindex.php');
 			var markers = <?php print $map_arr_json_data;?>
 		</script>
 		<script>
+
+			function showLegend(){
+				document.getElementById("legend").style.right = "10px";
+				document.getElementById("legendShowBtn").style.right = "-180px";
+			}
+			function hideLegend(){
+				document.getElementById("legend").style.right = "-180px";
+				document.getElementById("legendShowBtn").style.right = "10px";
+			}
+
+
 
 			var cities = L.layerGroup();
 
@@ -484,64 +499,64 @@ include('hindex.php');
 				if(heatflow == 0){
 					var myIcon = L.icon({
 						iconUrl: 'map_icon/map1.png',
-						iconSize: [32, 24],
-						iconAnchor: [9, 21],
+						iconSize: [20, 24],
+						iconAnchor: [0, 21],
 						popupAnchor: [0, -14]
 						});
 				}else if(heatflow > 0 && heatflow <= 25 ){
 					var myIcon = L.icon({
 						iconUrl: 'map_icon/map2.png',
-						iconSize: [32, 24],
-						iconAnchor: [9, 21],
+						iconSize: [20, 24],
+						iconAnchor: [0, 21],
 						popupAnchor: [0, -14]
 						});
 				}else if(heatflow > 25 && heatflow <= 50 ){
 					var myIcon = L.icon({
 						iconUrl: 'map_icon/map3.png',
-						iconSize: [32, 24],
-						iconAnchor: [9, 21],
+						iconSize: [18, 24],
+						iconAnchor: [0, 21],
 						popupAnchor: [0, -14]
 						});
 				}else if(heatflow > 50 && heatflow <= 75 ){
 					var myIcon = L.icon({
 						iconUrl: 'map_icon/map4.png',
-						iconSize: [32, 24],
-						iconAnchor: [9, 21],
+						iconSize: [18, 24],
+						iconAnchor: [0, 21],
 						popupAnchor: [0, -14]
 						});
 				}else if(heatflow > 75 && heatflow <= 100 ){
 					var myIcon = L.icon({
 						iconUrl: 'map_icon/map5.png',
-						iconSize: [32, 24],
-						iconAnchor: [9, 21],
+						iconSize: [18, 24],
+						iconAnchor: [0, 21],
 						popupAnchor: [0, -14]
 						});
 				}else if(heatflow > 100 && heatflow <= 150 ){
 					var myIcon = L.icon({
 						iconUrl: 'map_icon/map6.png',
-						iconSize: [32, 24],
-						iconAnchor: [9, 21],
+						iconSize: [18, 24],
+						iconAnchor: [0, 21],
 						popupAnchor: [0, -14]
 						});
 				}else if(heatflow > 150 && heatflow <= 250 ){
 					var myIcon = L.icon({
 						iconUrl: 'map_icon/map7.png',
-						iconSize: [32, 24],
-						iconAnchor: [9, 21],
+						iconSize: [18, 24],
+						iconAnchor: [0, 21],
 						popupAnchor: [0, -14]
 						});
 				}else if(heatflow > 250 && heatflow <= 500 ){
 					var myIcon = L.icon({
 						iconUrl: 'map_icon/map8.png',
-						iconSize: [32, 24],
-						iconAnchor: [9, 21],
+						iconSize: [18, 24],
+						iconAnchor: [0, 21],
 						popupAnchor: [0, -14]
 						});
 				}else{
 					var myIcon = L.icon({
 						iconUrl: 'map_icon/map9.png',
-						iconSize: [32, 24],
-						iconAnchor: [9, 21],
+						iconSize: [18, 24],
+						iconAnchor: [0, 21],
 						popupAnchor: [0, -15]
 						});
 

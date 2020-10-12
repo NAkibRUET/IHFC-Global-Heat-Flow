@@ -96,9 +96,14 @@ label {
   z-index: 400;
   background: white;
   padding: 10px;
+  opacity: 0.6;
+}
+#basemaps-wrapper:hover {
+  opacity: 1;
 }
 #basemaps {
   margin-bottom: 5px;
+  width: 160px;
 }
 #grid-wrapper {
   position: absolute;
@@ -107,9 +112,15 @@ label {
   z-index: 400;
   background: white;
   padding: 10px;
+  opacity: 0.6;
+}
+
+#grid-wrapper:hover {
+  opacity: 1;
 }
 #grid {
   margin-bottom: 5px;
+  width: 160px;
 }
 .sideNav {
   height: calc(100vh - 80px);
@@ -505,14 +516,65 @@ div.kreis {
   top: 340px;
   right: 10px;
   background: white;
+  padding: 10px 20px;
+  z-index: 1000;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
+  width: 180px;
+  opacity: 0.7;
+  cursor: default;
+}
+
+.dataCount:hover {
+  opacity: 1;
+}
+.legendShow {
+  position: fixed;
+  border-radius: 5px;
+  top: 340px;
+  right: 10px;
+  background: white;
+  padding: 10px 20px;
+  z-index: 1000;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
+  width: 180px;
+  opacity: 0.7;
+  cursor: default;
+  transition: 1s;
+}
+
+.legendShow:hover {
+  opacity: 1;
+}
+.legendContainer {
+  position: fixed;
+  border-radius: 5px;
+  top: 340px;
+  right: -180px;
+  margin-left: 190px;
+  background: white;
   padding: 10px;
   z-index: 1000;
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
+  width: 180px;
+  opacity: 0.7;
+  cursor: default;
+  transition: 1s;
 }
 
+.legendContainer:hover {
+  opacity: 1;
+}
 @media only screen and (max-width: 500px) {
   .dataCount {
     top: 340px;
+    font-size: 14px;
+  }
+  .legendShow {
+    top: 405px;
+    font-size: 14px;
+  }
+  .legendContainer {
+    top: 405px;
     font-size: 14px;
   }
 }
@@ -520,9 +582,22 @@ div.kreis {
   .dataCount {
     top: 290px;
   }
+  .legendShow {
+    top: 360px;
+  }
+  .legendContainer {
+    top: 360px;
+    font-size: 14px;
+  }
 }
 @media only screen and (min-width: 1020px) {
   .dataCount {
     top: 230px;
+  }
+  .legendShow {
+    top: 300px;
+  }
+  .legendContainer {
+    top: 300px;
   }
 }
