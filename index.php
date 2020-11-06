@@ -28,6 +28,37 @@ include('hindex.php');
 			.leaflet-control-attribution a{
 				font-size: inherit !important;
 			}
+			.mycluster {
+				width: 34px;
+				height: 34px;
+				border-radius: 50%;
+				text-align: center;
+				padding-top:7px;
+				font-size:12px;
+			}
+			.myclusterGray{
+				
+				border: 5px solid rgba(197, 197, 197, 0.5);
+				color:black;
+				background-color: rgba(191, 191, 191, 0.8);
+				background-clip: padding-box;
+			}
+			
+			.myclusterDarkGray{
+				border: 5px solid rgba(173, 173, 173, 0.5);
+				color:black;
+				background-color:rgba(168, 168, 168, 0.7);
+				background-clip: padding-box;
+			}
+			.myclusterDarkerGray{
+				font-size:11px;
+				border: 5px solid rgba(144, 144, 144, 0.5);
+				color:black;
+				background-color: rgba(138, 138, 138, 0.8);
+				background-clip: padding-box;
+			}
+			
+
 		</style>
 	</head>
 	<body class="viewer">
@@ -399,7 +430,7 @@ include('hindex.php');
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-contextmenu/1.4.0/leaflet.contextmenu.min.js" integrity="sha512-8sfQf8cr0KjCeN32YPfjvLU2cMvyY1lhCXTMfpTZ16CvwIzeVQtwtKlxeSqFs/TpXjKhp1Dcv77LQmn1VFaOZg==" crossorigin="anonymous"></script>
 		
 		<script src='<?=base_url?>js/esri-leaflet.js'></script>
-		
+		<script src="https://unpkg.com/leaflet.markercluster.freezable@1.0.0/dist/leaflet.markercluster.freezable.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/OverlappingMarkerSpiderfier-Leaflet/0.2.6/oms.min.js"></script>
 		<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 		<script src="https://leaflet.github.io/Leaflet.Graticule/Leaflet.Graticule.js"></script>
@@ -408,8 +439,7 @@ include('hindex.php');
 
 		<script>
 			var markers = <?php print $map_arr_json_data;?>
-		</script>
-		<script>
+
 
 			function showLegend(){
 				document.getElementById("legend").style.right = "10px";
@@ -460,6 +490,8 @@ include('hindex.php');
 				}]
 			});
 
+			
+
 			var baseLayers = {
 				"Grayscale": grayscale,
 				"Streets": streets
@@ -468,28 +500,30 @@ include('hindex.php');
 			var overlays = {
 				//"Cities": cities
 			};
-
-
-			//L.control.layers(baseLayers, overlays).addTo(map);
-			
-
-			//var myURL = jQuery( 'script[src$="leaf-demo.js"]' ).attr( 'src' ).replace( 'leaf-demo.js', '' );
-
-			/* var myIcon = L.icon({
-			iconUrl: 'my_icon.png',
-			iconRetinaUrl: 'gm.png',
-			iconSize: [29, 24],
-			iconAnchor: [9, 21],
-			popupAnchor: [0, -14]
-			}); */
-
-
 		
 
 
 			var heatflow;
 
-			var markerClusters = L.markerClusterGroup();
+			var markerClusters = L.markerClusterGroup({
+				maxClusterRadius: 80,
+				iconCreateFunction: function (cluster) {
+					var n = cluster.getChildCount();
+					
+					if(n <= 10){
+						return L.divIcon({ html: n, className: 'mycluster myclusterGray', iconSize: L.point(40, 40) });
+					}
+					else if(n > 10 && n <= 100){
+						return L.divIcon({ html: n, className: 'mycluster myclusterDarkGray', iconSize: L.point(40, 40) });
+					}
+					else if(n > 100){
+						return L.divIcon({ html: n, className: 'mycluster myclusterDarkerGray', iconSize: L.point(40, 40) });
+					}
+					
+				},
+				//Disable all of the defaults:
+				//spiderfyOnMaxZoom: false, showCoverageOnHover: false, zoomToBoundsOnClick: false
+			});
 
 			for ( var i = 0; i < markers.length; ++i )
 			{
@@ -571,18 +605,45 @@ include('hindex.php');
 				' <tr> <td> <b>Data status: </b> </td> <td style="padding-left:10px;">original, not verified</td> </tr> </table>'+
 				' <br/> Did you find an error or want <br/>to comment on this value? &rArr; <a href="mailto:heatflow@ihfc-iugg.org?subject=IHFC Heat Flow Viewer - New error report or comment" class="error-report">Contact us!</a> ';
 
-			var m = L.marker( [markers[i].lat, markers[i].lng], {icon: myIcon} )
+				var m = L.marker( [markers[i].lat, markers[i].lng], {icon: myIcon} )
 							.bindPopup( popup );
 
-			markerClusters.addLayer( m );
+				markerClusters.addLayer( m );
 			}
 
 			map.addLayer( markerClusters );
+			
 
-				//add better scale
+			// map.on("zoomend", showMapCurrentZoom);
 
-				L.control.betterscale({metric: true, imperial: false}).addTo(map);
-				L.control.mousePosition().addTo(map);
+			// showMapCurrentZoom();
+
+			// function showMapCurrentZoom() {
+			// 	var currZoom = map.getZoom();
+			// 	if(currZoom > 5){
+			// 		markerClusters.disableClustering();
+			// 	}
+			// 	else{
+			// 		markerClusters.enableClustering();
+			// 	}
+			// }
+			
+			
+			//markerClusters.addTo(map);
+
+			//markerClusters.freezeAtZoom(55);
+			// markerClusters.freezeAtZoom("maxKeepSpiderfy");
+			// markerClusters.freezeAtZoom("max");
+			// markerClusters.unfreeze(); // shortcut for mcg.freezeAtZoom(false)
+
+			// markerClusters.disableClusteringKeepSpiderfy(); // shortcut for mcg.freezeAtZoom("maxKeepSpiderfy")
+			// markerClusters.disableClustering(); // shortcut for mcg.freezeAtZoom("max")
+			// markerClusters.enableClustering(); // alias for mcg.unfreeze()
+
+			//add better scale
+
+			L.control.betterscale({metric: true, imperial: false}).addTo(map);
+			L.control.mousePosition().addTo(map);
 
 			
 
@@ -612,49 +673,29 @@ include('hindex.php');
 
 		
 
-		// oms starts
+		
 
 
-		//oms ends
+		
 
 
+			function showCoordinates (e) {
+				alert(e.latlng);
+			}
 
+			function centerMap (e) {
+				map.panTo(e.latlng);
+			}
 
-		// L.geoJson(countries, {
-		//     style: {
-		//         color: '#000',
-		//         weight: 0.5,
-		//         opacity: 1,
-		//         fillColor: '#fff',
-		//         fillOpacity: 1
-		//     }
-		// }).addTo(map);
+			function zoomIn (e) {
+				map.zoomIn();
+			}
 
-		// map.fitWorld();
+			function zoomOut (e) {
+				map.zoomOut();
+			}
 
-
-
-
-		// call functions for conetext menu
-
-
-		function showCoordinates (e) {
-			alert(e.latlng);
-		}
-
-		function centerMap (e) {
-			map.panTo(e.latlng);
-		}
-
-		function zoomIn (e) {
-			map.zoomIn();
-		}
-
-		function zoomOut (e) {
-			map.zoomOut();
-		}
-
-		var grat = L.latlngGraticule({
+			var grat = L.latlngGraticule({
 				showLabel: true,
 				color: '#000',
 				weight:'0.5',
@@ -667,63 +708,61 @@ include('hindex.php');
 			});
 			
 		
-		$('#grid').on('change', function() {
+			$('#grid').on('change', function() {
 
+				
+				if(this.value == "yes"){
+					grat.addTo(map);
+				}
+				else if(this.value == "no"){
+					//location.reload();
+					grat.remove();
+				}
+
+
+			});
 			
-			if(this.value == "yes"){
-				grat.addTo(map);
-			}
-			else if(this.value == "no"){
-				//location.reload();
-				grat.remove();
-			}
+			$('#basemaps').on('change', function() {
+			//alert( this.value );
+				var basemap = this.value;
+				setBasemap(basemap);
+			});
 
+			var layer = L.esri.basemapLayer('Topographic').addTo(map);
+			var layerLabels;
+			function setBasemap (basemap) {
+				if (layer) {
+					map.removeLayer(layer);
+				}
 
-		});
+				layer = L.esri.basemapLayer(basemap);
+
+				map.addLayer(layer);
+
+				if (layerLabels) {
+					map.removeLayer(layerLabels);
+				}
+
+				if (
+					basemap === 'ShadedRelief' ||
+					basemap === 'Oceans' ||
+					basemap === 'Gray' ||
+					basemap === 'DarkGray' ||
+					basemap === 'Terrain'
+				) {
+					layerLabels = L.esri.basemapLayer(basemap + 'Labels');
+					map.addLayer(layerLabels);
+				} else if (basemap.includes('Imagery')) {
+					layerLabels = L.esri.basemapLayer('ImageryLabels');
+					map.addLayer(layerLabels);
+				}
+			}
 		
-		$('#basemaps').on('change', function() {
-		//alert( this.value );
-			var basemap = this.value;
-			setBasemap(basemap);
-		});
-
-		var layer = L.esri.basemapLayer('Topographic').addTo(map);
-		var layerLabels;
-		function setBasemap (basemap) {
-			if (layer) {
-			map.removeLayer(layer);
-			}
-
-			layer = L.esri.basemapLayer(basemap);
-
-			map.addLayer(layer);
-
-			if (layerLabels) {
-			map.removeLayer(layerLabels);
-			}
-
-			if (
-			basemap === 'ShadedRelief' ||
-			basemap === 'Oceans' ||
-			basemap === 'Gray' ||
-			basemap === 'DarkGray' ||
-			basemap === 'Terrain'
-			) {
-			layerLabels = L.esri.basemapLayer(basemap + 'Labels');
-			map.addLayer(layerLabels);
-			} else if (basemap.includes('Imagery')) {
-			layerLabels = L.esri.basemapLayer('ImageryLabels');
-			map.addLayer(layerLabels);
-			}
-		}
-		
-		// end of context menu
-
+			// end of context menu
 
 
 		</script>
-		<!--script type='text/javascript' src='<?=base_url?>maps/leaf-demo.js'></script-->
-
+		
 		<script type="text/javascript">
 			$(function(){
 				$(".chosen-select").chosen();
@@ -785,11 +824,7 @@ include('hindex.php');
 						}, 500);*/
 					}
 				});
-				// $("#heatflow1").on("keyup",function(e){
-					
-				// });
-				// $( "#heatflow1" ).val( $( "#slider-range" ).slider( "values", 0 ) + " - " + $( "#slider-range" ).slider( "values", 1 ) );
-				//-->
+				
 
 			//-- ##### Year ##### -->
 
