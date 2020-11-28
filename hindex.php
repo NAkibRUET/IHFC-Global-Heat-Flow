@@ -58,7 +58,7 @@ if(isset($_POST) && count($_POST) > 0){
 		if($_POST['select_year'] == '2010'){
 			$table = 'IHFC2010';
 		}elseif($_POST['select_year'] == '2020'){
-			$table = 'ihfc2020';
+			$table = 'IHFC2020';
 		}
 	}
 	
