@@ -85,34 +85,18 @@ include('hindex.php');
 						<div class="sideNav srclicolst mobile_block" style="">
 							<div class="select-table">
 							<div class="form-group mb-3">
-								<select class="form-control chosen-select" name="select_year" id="select_year" data-placeholder="Select Year">
+								<select onchange="YearFilterHandling()" class="form-control chosen-select" name="select_year" id="select_year" data-placeholder="Select Year">
 									<option value="">Site Year</option>
 									<option value="2010" <?php if(isset($_POST['select_year']) && $_POST['select_year'] == '2010'){ echo 'selected'; }else{ echo 'selected'; }?>>2010</option>
 									<option value="2020" <?php if(isset($_POST['select_year']) && $_POST['select_year'] == '2020'){ echo 'selected'; }?>>2020</option>
 								</select>
 							</div>
 						</div>
+						
 						<hr>
 							<div class="mt-3">
 								<h5 class="brosiclit">Filter Database</h5>
 							</div>
-							<!--- disable global search 
-								<div class="form-group mb-4">
-									<input type="text" class="form-control" id="search" name="s" value="<?php // if(isset($_POST['s']) && $_POST['s'] != ''){ echo $_POST['s']; }?>" placeholder="Search...">
-								</div>
-									-->
-
-								<!-- disable lower year selection 
-								<div class="form-group mb-3">
-									<select class="form-control chosen-select" name="select_year" id="select_year" data-placeholder="Select Year">
-										<option value="">Site Year</option>
-										<option value="2010" <?php if(isset($_POST['select_year']) && $_POST['select_year'] == '2010'){ echo 'selected'; }else{ echo 'selected'; }?>>2010</option>
-										<option value="2020" <?php if(isset($_POST['select_year']) && $_POST['select_year'] == '2020'){ echo 'selected'; }?>>2020</option>
-									</select>
-								</div>
-							-->
-
-
 								<div class="form-group mb-3">
 									<select class="form-control chosen-select" name="sitename" id="sitename" data-placeholder="Site name">
 										<option value="">Site name</option>
@@ -150,21 +134,20 @@ include('hindex.php');
 								</div>
 
 								<div class="form-group mb-3">
-									<!-- <label for="conti"> Continents</label> -->
-										<select class="form-control chosen-select" name="continent[]" id="continent" data-placeholder="Continent" multiple>
-											<option value="">Continent</option>
-											<?php
-												$allContinent = allContinent();
-												if(!empty($allContinent)){
-													foreach($allContinent as $continent){
-														$selected = '';
-														if(!empty($_POST['continent']) && in_array($continent->continent, $_POST['continent'])){
-															$selected = 'selected=""';
-														}
-														echo '<option value="'.$continent->continent.'" '.$selected.'>'.$continent->continent.'</option>';
+									<select class="form-control chosen-select" name="continent[]" id="continent" data-placeholder="Continent" multiple>
+										<option value="">Continent</option>
+										<?php
+											$allContinent = allContinent();
+											if(!empty($allContinent)){
+												foreach($allContinent as $continent){
+													$selected = '';
+													if(!empty($_POST['continent']) && in_array($continent->continent, $_POST['continent'])){
+														$selected = 'selected=""';
 													}
+													echo '<option value="'.$continent->continent.'" '.$selected.'>'.$continent->continent.'</option>';
 												}
-											?>
+											}
+										?>
 									</select>
 								</div>
 
@@ -420,6 +403,7 @@ include('hindex.php');
 		
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js" integrity="sha512-rMGGF4wg1R73ehtnxXBt5mbUfN9JUJwbk21KMlnLZDJh7BkPmeovBuddZCENJddHYYMkCh9hPFnPmS9sspki8g==" crossorigin="anonymous"></script>
 		<script src="<?=base_url?>js/custom.js"></script>
+		<script src='js/YearFilterHandling.js'></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin="anonymous"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/leaflet.markercluster.js" integrity="sha512-MQlyPV+ol2lp4KodaU/Xmrn+txc1TP15pOBF/2Sfre7MRsA/pB4Vy58bEqe9u7a7DczMLtU5wT8n7OblJepKbg==" crossorigin="anonymous"></script>
 		<script src='js/betterScale.js'></script>
@@ -430,6 +414,7 @@ include('hindex.php');
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-contextmenu/1.4.0/leaflet.contextmenu.min.js" integrity="sha512-8sfQf8cr0KjCeN32YPfjvLU2cMvyY1lhCXTMfpTZ16CvwIzeVQtwtKlxeSqFs/TpXjKhp1Dcv77LQmn1VFaOZg==" crossorigin="anonymous"></script>
 		
 		<script src='<?=base_url?>js/esri-leaflet.js'></script>
+		
 		<script src="https://unpkg.com/leaflet.markercluster.freezable@1.0.0/dist/leaflet.markercluster.freezable.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/OverlappingMarkerSpiderfier-Leaflet/0.2.6/oms.min.js"></script>
 		<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
