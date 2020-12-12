@@ -1,6 +1,19 @@
 <?php 
 $where = '';
-$table = 'IHFC2010';
+$DB_Year = '';
+
+if(isset($_GET['year'])){
+	$DB_Year = $_GET['year'];
+}
+if($DB_Year == '2010'){
+    $table = 'IHFC2010';
+}
+else if($DB_Year == '2020'){
+    $table = 'IHFC2020';
+}
+else{
+    $table = 'IHFC2010';
+}
 if(isset($_POST) && count($_POST) > 0){
     //echo "<pre>"; print_r($_POST);
     /*[sitename] => 1

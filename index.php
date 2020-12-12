@@ -86,9 +86,9 @@ include('hindex.php');
 							<div class="select-table">
 							<div class="form-group mb-3">
 								<select onchange="YearFilterHandling()" class="form-control chosen-select" name="select_year" id="select_year" data-placeholder="Select Year">
-									<option value="">Site Year</option>
-									<option value="2010" <?php if(isset($_POST['select_year']) && $_POST['select_year'] == '2010'){ echo 'selected'; }else{ echo 'selected'; }?>>2010</option>
-									<option value="2020" <?php if(isset($_POST['select_year']) && $_POST['select_year'] == '2020'){ echo 'selected'; }?>>2020</option>
+									
+									<option value="2010" <?php if(isset($_GET['year']) && $_GET['year'] == '2010'){ echo 'selected'; }else{ echo 'selected'; }?>>2010</option>
+									<option value="2020" <?php if(isset($_GET['year']) && $_GET['year'] == '2020'){ echo 'selected'; }?>>2020</option>
 								</select>
 							</div>
 						</div>
@@ -97,11 +97,11 @@ include('hindex.php');
 							<div class="mt-3">
 								<h5 class="brosiclit">Filter Database</h5>
 							</div>
-								<div class="form-group mb-3">
-									<select class="form-control chosen-select" name="sitename" id="sitename" data-placeholder="Site name">
+								<div class="form-group mb-3" id="showSiteName">
+									<select class="form-control chosen-select" name="sitename" id="sitename" >
 										<option value="">Site name</option>
 										<?php
-											$allSiteName = allSiteName();
+											$allSiteName = allSiteName($table);
 											if(!empty($allSiteName)){
 												foreach($allSiteName as $siteName){
 													$selected = '';
@@ -119,7 +119,9 @@ include('hindex.php');
 									<select class="form-control chosen-select" id="country" name="country[]" data-placeholder="Region or country" multiple>
 										<option value="">Region or country</option>
 										<?php
-											$allCountry = allCountry();
+											
+											$allCountry = allCountry($table);
+											
 											if(!empty($allCountry)){
 												foreach($allCountry as $country){
 													$selected = '';
@@ -137,7 +139,9 @@ include('hindex.php');
 									<select class="form-control chosen-select" name="continent[]" id="continent" data-placeholder="Continent" multiple>
 										<option value="">Continent</option>
 										<?php
-											$allContinent = allContinent();
+											
+											$allContinent = allContinent($table);
+											
 											if(!empty($allContinent)){
 												foreach($allContinent as $continent){
 													$selected = '';
@@ -151,31 +155,17 @@ include('hindex.php');
 									</select>
 								</div>
 
-								<div class="form-group mb-3">
-									<!-- <label for="search"> Search Year</label>
-										<select class="form-control chosen-select" name="year" id="year" data-placeholder="Year of publication">
-											<option value="">Year of publication</option>
-											<?php
-												$allYears = allYears();
-												if(!empty($allYears)){
-													foreach($allYears as $year){
-														$selected = '';
-														if(isset($_POST['year']) && $_POST['year'] == $year->year_of_pub){
-															$selected = 'selected=""';
-														}
-														echo '<option value="'.$year->year_of_pub.'" '.$selected.'>'.$year->year_of_pub.'</option>';
-													}
-												}
-											?>
-									</select>   -->  
-								</div>
+								
 
 								<div class="form-group mb-3">
 									<!-- <label for="conti"> Reference</label> -->
 										<select class="form-control chosen-select" name="reference[]" id="reference" data-placeholder="Reference" multiple>
 											<option value="">Reference</option>
 											<?php
-												$allReferences = allReferences();
+											
+												
+												$allReferences = allReferences($table);
+												
 												if(!empty($allReferences)){
 													foreach($allReferences as $reference){
 														$selected = '';
@@ -381,13 +371,13 @@ include('hindex.php');
 			</div>
 		</div>
 		<?php
-			$heatflow_sql = "SELECT MAX(heatflow) AS mx_hf, MIN(heatflow) AS mn_hf FROM `IHFC2010`";
+			$heatflow_sql = "SELECT MAX(heatflow) AS mx_hf, MIN(heatflow) AS mn_hf FROM ".$table;
 			$stmt = $conn->prepare($heatflow_sql);
 			$stmt->execute();
 			$heatflow_data = $stmt->fetch(PDO::FETCH_OBJ);
 		?>
 		<?php
-			$year_sql = "SELECT MAX(year_of_pub) AS mx_y, MIN(year_of_pub) AS mn_y FROM `IHFC2010`";
+			$year_sql = "SELECT MAX(year_of_pub) AS mx_y, MIN(year_of_pub) AS mn_y FROM ".$table;
 			$stmt = $conn->prepare($year_sql);
 			$stmt->execute();
 			$year_data = $stmt->fetch(PDO::FETCH_OBJ);
@@ -599,31 +589,7 @@ include('hindex.php');
 			map.addLayer( markerClusters );
 			
 
-			// map.on("zoomend", showMapCurrentZoom);
-
-			// showMapCurrentZoom();
-
-			// function showMapCurrentZoom() {
-			// 	var currZoom = map.getZoom();
-			// 	if(currZoom > 5){
-			// 		markerClusters.disableClustering();
-			// 	}
-			// 	else{
-			// 		markerClusters.enableClustering();
-			// 	}
-			// }
 			
-			
-			//markerClusters.addTo(map);
-
-			//markerClusters.freezeAtZoom(55);
-			// markerClusters.freezeAtZoom("maxKeepSpiderfy");
-			// markerClusters.freezeAtZoom("max");
-			// markerClusters.unfreeze(); // shortcut for mcg.freezeAtZoom(false)
-
-			// markerClusters.disableClusteringKeepSpiderfy(); // shortcut for mcg.freezeAtZoom("maxKeepSpiderfy")
-			// markerClusters.disableClustering(); // shortcut for mcg.freezeAtZoom("max")
-			// markerClusters.enableClustering(); // alias for mcg.unfreeze()
 
 			//add better scale
 
@@ -659,10 +625,6 @@ include('hindex.php');
 		
 
 		
-
-
-		
-
 
 			function showCoordinates (e) {
 				alert(e.latlng);
@@ -871,12 +833,12 @@ include('hindex.php');
 
 				//-- ##### Depth ##### -->
 		<?php
-			$mind_sql = "SELECT MIN(mind) AS mn_mind FROM `IHFC2010` WHERE mind > 0 ";
+			$mind_sql = "SELECT MIN(mind) AS mn_mind FROM ".$table." WHERE mind > 0 ";
 			$stmt = $conn->prepare($mind_sql);
 			$stmt->execute();
 			$mind_data = $stmt->fetch(PDO::FETCH_OBJ);
 
-			$maxd_sql = "SELECT MAX(maxd) as mx_maxd FROM `IHFC2010` WHERE maxd > 0 ";
+			$maxd_sql = "SELECT MAX(maxd) as mx_maxd FROM ".$table." WHERE maxd > 0 ";
 			$stmt = $conn->prepare($maxd_sql);
 			$stmt->execute();
 			$maxd_data = $stmt->fetch(PDO::FETCH_OBJ);

@@ -99,55 +99,55 @@ function getAlbumDetails($aid){
 	
 }
 
-function allSiteName(){
+function allSiteName($tableName){
 	
 	global $conn;
 
-	$stmt = $conn->prepare("SELECT `id`, `site_name` FROM `IHFC2010`"); 
+	$stmt = $conn->prepare("SELECT DISTINCT `site_name` FROM ".$tableName." WHERE `site_name`!='' OR  `site_name`!=NULL"); 
 	$stmt->execute(); 
 	$row = $stmt->fetchAll(PDO::FETCH_OBJ);
 	
 	return $row;	
 }
 
-function allCountry(){
+function allCountry($tableName){
 	
 	global $conn;
 
-	$stmt = $conn->prepare("SELECT `region` FROM `IHFC2010` GROUP BY `region`"); 
+	$stmt = $conn->prepare("SELECT DISTINCT `region` FROM ".$tableName); 
 	$stmt->execute(); 
 	$row = $stmt->fetchAll(PDO::FETCH_OBJ);
 	
 	return $row;	
 }
 
-function allContinent(){
+function allContinent($tableName){
 	
 	global $conn;
 
-	$stmt = $conn->prepare("SELECT `continent` FROM `IHFC2010` GROUP BY `continent`"); 
+	$stmt = $conn->prepare("SELECT DISTINCT `continent` FROM ".$tableName); 
 	$stmt->execute(); 
 	$row = $stmt->fetchAll(PDO::FETCH_OBJ);
 	
 	return $row;	
 }
 
-function allYears(){
+function allYears($tableName){
 	
 	global $conn;
 
-	$stmt = $conn->prepare("SELECT `year_of_pub` FROM `IHFC2010` GROUP BY `year_of_pub`"); 
+	$stmt = $conn->prepare("SELECT DISTINCT `year_of_pub` FROM ".$tableName); 
 	$stmt->execute(); 
 	$row = $stmt->fetchAll(PDO::FETCH_OBJ);
 	
 	return $row;	
 }
 
-function allReferences(){
+function allReferences($tableName){
 	
 	global $conn;
 
-	$stmt = $conn->prepare("SELECT `reference` FROM `IHFC2010` GROUP BY `reference`"); 
+	$stmt = $conn->prepare("SELECT DISTINCT `reference` FROM ".$tableName); 
 	$stmt->execute(); 
 	$row = $stmt->fetchAll(PDO::FETCH_OBJ);
 	
